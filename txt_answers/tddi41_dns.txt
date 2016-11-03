@@ -1,0 +1,242 @@
+********************************************
+********************DNS*********************
+********************************************
+
+1-2 
+a) An authoritative name server answers question regarding a specific or multiple specific
+zones preconfigured by the administrator. An authoritative-only name server only does this job,
+although a name server can act as a authoritative name server for some zones and as a chaching
+name server in others.
+
+b) A zone is simply a portion of a domain. (A domain may contain several zones. For example liu.se contains multiple zones: ida.liu.se, filfak.liu.se student.liu.se etc...
+
+c) A recursive query implies that the DNS server is not allowed to refer the dns client to another dns server but must ask this question itself (must respond with answer or an error, not referal) in comparison to an iterative or non recursive query where the dns server might refer the dns client to another dns server
+
+d) The purpose of delegation is simply to share the workload (load balancing) to allow for a smooth and wonderful networking experience.
+
+e) Resource records are the records, objects or documents that hold information of where a host exists/might exist and also holds a TTL.
+
+f) 
+1 Message Header
+2 DNS question being asked
+3 Resource records which answer the question
+4 Resource records which point to the domain authority
+5 Resource records which may hold additional information
+
+g)  
+A bit in the header is set. (AA - Authorative answer)
+
+A bit in the header is set. (RD - Recursion desired)
+
+h) A glue record is the ip address of a name server held at the domain name registry, glue records
+are required when you wish to set the name servers of a domain name to a hostname under the domain
+name itself
+
+
+1-3
+dns.liu.se (dns)
+ns.liu.se (ns)
+
+Har lite frågor till Rikard här!
+
+1-4
+A single zone can only be delegated once, in-addr.arpa is used to have more points to do delegation on: extending the in-addr.arpa tree downwards for example by using the first address or the first address and network mask length in the corresponding address space to form the first component in the name for the zones.
+
+
+****************************************************
+**********************PART II***********************
+****************************************************
+
+2-1
+a) 130.236.177.26
+
+b) 130.236.177.26 (www.ida.liu.se is an alias of informatix.ida.liu.se)
+
+c) 130.236.5.66
+
+2-2
+a) The first response contains less information (no answer) because the name server does not have this information. The second query is to a name server which contains information regarding this particular host THUS giving us a more informative answer.
+
+b) See a)
+
+
+
+3-1
+host -C adlibris.se
+nameserver: a.ns.ip-only.net
+Operated by ip-only (registry.ip-only.net)
+
+3-2
+host -l sysinst.ida.liu.se ns.ida.liu.se | wc -l
+194
+
+
+3-3
+host ida.liu.se
+ida.liu.se has address 130.236.177.25
+ida.liu.se has IPv6 address 2001:6b0:17:f020::25
+ida.liu.se mail is handled by 10 e-mailfilter04.sunet.se.
+ida.liu.se mail is handled by 10 e-mailfilter03.sunet.se.
+
+It is IT!
+
+
+4-1
+a)
+130.236.178.1
+
+emini901@li17-18:~$ dig ida-gw.sysinst.ida.liu.se
+
+; <<>> DiG 9.9.5-3ubuntu0.9-Ubuntu <<>> ida-gw.sysinst.ida.liu.se
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 62218
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;ida-gw.sysinst.ida.liu.se.	IN	A
+
+;; ANSWER SECTION:
+ida-gw.sysinst.ida.liu.se. 131	IN	A	130.236.178.1
+
+;; Query time: 1 msec
+;; SERVER: 130.236.1.9#53(130.236.1.9)
+;; WHEN: Wed Sep 28 14:26:49 CEST 2016
+;; MSG SIZE  rcvd: 70
+
+
+b)
+emini901@li17-18:~$ dig +short ns sysinst.ida.liu.se
+sysinst-gw.ida.liu.se.   <----- maybe?
+ns.ida.liu.se.    <------------
+
+c)
+idagw-189.ida.liu.se
+
+emini901@li17-18:~$ dig -x 130.236.189.1
+
+; <<>> DiG 9.9.5-3ubuntu0.9-Ubuntu <<>> -x 130.236.189.1
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 39660
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;1.189.236.130.in-addr.arpa.	IN	PTR
+
+;; ANSWER SECTION:
+1.189.236.130.in-addr.arpa. 2747 IN	PTR	idagw-189.ida.liu.se.
+
+;; Query time: 0 msec
+;; SERVER: 130.236.1.9#53(130.236.1.9)
+;; WHEN: Wed Sep 28 14:31:16 CEST 2016
+;; MSG SIZE  rcvd: 89
+
+
+4-2
+a)
+nstld.verisign-grs.com
+
+b)
+ekns01.kodak.com.
+
+ns1.msft.net.
+
+
+emini901@li17-18:~$ dig update.microsoft.com
+
+; <<>> DiG 9.9.5-3ubuntu0.9-Ubuntu <<>> update.microsoft.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 59859
+;; flags: qr ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;update.microsoft.com.		IN	A
+
+;; ANSWER SECTION:
+update.microsoft.com.	3588	IN	CNAME	update.microsoft.com.nsatc.net.
+update.microsoft.com.nsatc.net.	288 IN	CNAME	www.update.microsoft.com.nsatc.net.
+www.update.microsoft.com.nsatc.net. 288	IN A	65.55.50.189
+www.update.microsoft.com.nsatc.net. 288	IN A	191.232.80.55
+
+;; Query time: 0 msec
+;; SERVER: 130.236.1.9#53(130.236.1.9)
+;; WHEN: Wed Sep 28 14:40:52 CEST 2016
+;; MSG SIZE  rcvd: 143
+
+emini901@li17-18:~$ host 65.55.50.189
+Host 189.50.55.65.in-addr.arpa. not found: 3(NXDOMAIN)
+emini901@li17-18:~$ dig update.microsoft.com.nsatc.net.
+
+; <<>> DiG 9.9.5-3ubuntu0.9-Ubuntu <<>> update.microsoft.com.nsatc.net.
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 45365
+;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;update.microsoft.com.nsatc.net.	IN	A
+
+;; ANSWER SECTION:
+update.microsoft.com.nsatc.net.	216 IN	CNAME	www.update.microsoft.com.nsatc.net.
+www.update.microsoft.com.nsatc.net. 216	IN A	191.232.80.55
+www.update.microsoft.com.nsatc.net. 216	IN A	65.55.50.189
+
+;; Query time: 1 msec
+;; SERVER: 130.236.1.9#53(130.236.1.9)
+;; WHEN: Wed Sep 28 14:42:04 CEST 2016
+;; MSG SIZE  rcvd: 109
+
+emini901@li17-18:~$ dig -x 192.232.80.155
+
+; <<>> DiG 9.9.5-3ubuntu0.9-Ubuntu <<>> -x 192.232.80.155
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 48279
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;155.80.232.192.in-addr.arpa.	IN	PTR
+
+;; AUTHORITY SECTION:
+80.232.192.in-addr.arpa. 10	IN	SOA	ekns01.kodak.com. ekdomain.kodak.com. 6 10800 1800 604800 10
+
+;; Query time: 500 msec
+;; SERVER: 130.236.1.9#53(130.236.1.9)
+;; WHEN: Wed Sep 28 14:42:50 CEST 2016
+;; MSG SIZE  rcvd: 117
+
+emini901@li17-18:~$ dig -x 65.55.50.189
+
+; <<>> DiG 9.9.5-3ubuntu0.9-Ubuntu <<>> -x 65.55.50.189
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 13797
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;189.50.55.65.in-addr.arpa.	IN	PTR
+
+;; AUTHORITY SECTION:
+55.65.in-addr.arpa.	3491	IN	SOA	ns1.msft.net. msnhst.microsoft.com. 2016092702 7200 900 7200000 3600
+
+;; Query time: 0 msec
+;; SERVER: 130.236.1.9#53(130.236.1.9)
+;; WHEN: Wed Sep 28 14:43:16 CEST 2016
+;; MSG SIZE  rcvd: 122
+
+
+????

@@ -1,0 +1,328 @@
+////////////////////////////////////////////////////////////////
+////////////////// USER MODE LINUX/////////////////////////////
+//////////////////////////////////////////////////////////////
+
+
+
+
+1.1
+What is the command to run UML(without extra software, such as mln)
+
+Booting UML is straightforward. Simply run 'linux': it will try to mount the file `root_fs' in the current directory. You do not need to run it as root. If your root filesystem is not named `root_fs', then you need to put a `ubd0=root_fs_whatever' switch on the linux command line.
+
+1.2
+What does the mem parameter to the UML command do?
+
+When you start UML, it will create a file whose size is the same as the UML physical memory size, which is whatever you specified with the 'mem=' switch or its default
+
+mem=size controls how much "physical" memory the kernel allocates for the system
+
+
+1.3
+What is the role of uml_switch?
+
+The switch daemon, uml_switch, provides a mechanism for creating a totally virtual network. By default, it provides no connection to the host network (but see -tap, below).
+
+Note: This is the daemon formerly known as uml_router, but which was renamed so the network weenies of the world would stop growling at me.
+
+The first thing you need to do is run the daemon. Running it with no arguments will make it listen on a default unix domain socket.
+
+
+1.4
+What is a user block device?
+
+It's a block device that runs in userspace.
+The block device is a file that refers to a device.
+
+1.5
+What is VDE (as related to networking and virtualization)?
+
+VDE is an ethernet compliant virtual network that can be spawned over a set of physical computers over the internet.
+
+
+3.2
+How much memory do the UML instances have?
+
+The UML instances each have 64M (for lab-1 atleast)
+
+
+3.3
+The start scripts can start each UML in an xterm or screen. What is screen?
+
+If the UML:s are started in screen they are put in the background, but the Linux command "screen -r <host>" can be used to connect a terminal to the UML instance <host> if desired.
+
+6.1
+scp root@10.17.1.227:/etc/network/interfaces /home/emini901/
+
+6.2
+scp -r root@10.17.1.227:/etc/default /home/emini901/
+
+
+////////////////////////////////////////////////////////////////
+//////////////////  LINUX BASICS //////////////////////////////
+//////////////////////////////////////////////////////////////
+
+3-1
+a)     1   Executable programs or shell commands
+       2   System calls (functions provided by the kernel)
+       3   Library calls (functions within program libraries)
+       4   Special files (usually found in /dev)
+       5   File formats and conventions eg /etc/passwd
+       6   Games
+       7   Miscellaneous  (including  macro  packages  and  conventions), e.g.
+           man(7), groff(7)
+       8   System administration commands (usually only for root)
+       9   Kernel routines [Non standard]
+
+b) section 1
+
+c) section 5
+
+d) section 8
+
+4-1
+a) skriv precis så (mkpasswd PASSWORD SALT)
+
+b) uniq [ett eller fler options] output är ett argument till input.
+
+c) alla argument [-acdfhlLnNrtvV19] är frivilliga, -S är optional suffix är argument till -S och name är optional och repeatable.
+
+d)
+chcon [OPTION]... CONTEXT FILE...
+options noll, ett eller fler (repeatable). byt ut context mot riktig context och file till filnamn (filnamn är repeatable)
+
+chcon [OPTION]... [-u USER] [-r ROLE] FILE...
+options noll ett eller fler (repeatable), frivillig flagga -u med argument byt USEr till riktig användare. frivillig flagga -r byt ROLE mot riktig role och file til fillnamn (FILE är repeatable)
+
+chcon [OPTION]... --reference=RFILE FILE...
+options noll ett eller fler (repeatable). --reference är argumentet context i första exemplet för chcon och file är filnamn (repeatable)
+
+
+4-2
+a) The description section beskriver kommandots användningsområde.
+
+b) OPTIONS
+
+c) SEE ALSO
+
+d) FILES
+
+f)
+
+
+4-3
+a) man -a PAGE
+
+b)man -k printf, man --apropos printf
+
+
+4-4
+a) List  information  about  the FILEs (the current directory by default).
+       Sort entries alphabetically if none of -cftuvSUX nor --sort  is  specified.
+
+b) ls -l
+
+c) list subdirectories recursively
+
+
+5-1
+a) ssh
+
+b) ../bin/ssh
+
+
+6-1
+a) chmod u+rw-x,go+r-wx FILE
+
+b) chmod g-rwx
+
+c) chmod ug+x
+
+
+7-1
+a) user read write, group read write, others read write
+
+b)user and group rwx others ---
+
+c) rw user, r group, others none
+
+d) read for user group and others
+
+
+7-2 chmod -R
+
+
+7-3 Means permission to traverse the directory (access files and directories inside)
+
+
+7-4 chmod -R u+rw,g+rw,o-rwx because it does not set the x flag on subdirectories, which means they are still accesible by those with permissions.
+
+
+8-1 chown -R user:group foobar (if system supports changing group with chown)
+
+
+9-1 cd .. moves to the directory above the working directory.
+
+
+9-2 cd ../.. moves to the directory above the directory above the working directory.
+
+
+9-3 -l prints file type file mode bits number of hard links owner name group name size and timestamp
+    -a prints all files (ignores . (hidden files))
+    -F adds a symbol to the filename which depends on information about the file.. if it is executeable or a symbolic link etc..
+
+    
+9-4
+a) file-type (character-type special file)
+
+b) the owner and group of the directory dir
+   the owner and group of the character-type special file dspp
+
+c) root and members of the group audio
+
+
+9-5 mv issues a warning by default in this situation -f or --force will overwrite without warning.
+
+
+9-6 yes, -p or --preserve
+
+
+9-7 chown root:wheel secret
+    chmod u+rw-x,g+r-wx,o-rwx
+
+
+10-1 /bin/bash
+
+
+10-2
+/bin/bash
+/etc/profile
+/etc/bash.bashrc
+/etc/bash.bash.logout
+~/.bash_profile
+~/.bashrc
+~/.bash_logout
+~/.inputrc
+
+
+11-1) PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/tommy/bin/pintos
+
+This variable is used by the shell to know which directories to search for executable files
+
+11-2) echo $HOME --> /home/tommy
+
+HOME normally contains the path to the current user's home directory.
+
+11-3) PATH=/data/kurs/adit/bin:/data/kurs/TDDI41/bin:$PATH
+
+
+12-1
+a) stdout: file1
+
+b) stdout: file1
+   stderr: whatever stdout was before
+
+c) stdout file1
+   stderr: file1
+
+   
+13-1
+a) ls | grep -i doc
+söker efter doc(-i ignorerar case) i working directory
+
+b) utför 'command' och sätter stderr till samma som stdout och pipar det vidare till grep som söker efter <fail>.
+
+c) samma som b men sätter också stdout till /dev/null/.
+
+
+13-2
+a) ls -Ra > /tmp/HOMEFILES
+
+b) find / -perm -o=w 2>/dev/null
+
+
+
+14-1 Done
+
+
+14-2 Done
+
+
+14-3 Send killsignal to pid. kill -9 -1 kills all processes that can be killed
+
+
+14-4 Done
+
+
+16-1 g
+
+
+16-2 G
+
+
+16-3 / forward search  ? backward search   n for next match N for previous match reverse directortion for backward search
+
+
+16-4 see above
+
+
+
+16-5
+a) 
+
+
+b)  Requires only stock X11 libraries (libXt, libX11, libSM, libICE).
+
+
+18-1
+tail -f /var/log/syslog will output the last part of the syslog and then it will output appended data as the syslog file grows
+
+18-2
+grep -i cron /var/log/syslog | tail
+
+19-1
+The services that are started are in rcS.d and rc2.d
+ls /etc/rcS.d/
+S05keymap.sh  S35quota	S55urandom  S70x11-common
+ls /etc/rc2.d/
+S20nscd		S23ntp		S99linuxlogo
+S20cfengine2   S20rsync		S37iptables-persistent	S99ondemand
+S20exim4       S20rwhod-sender	S70pppd-dns		S99rc.local
+S20jove        S21quotarpc	S99fail2ban
+S20mintsystem  S21sendmail	S99grub-common
+
+19-2
+/etc/init.d/ssh restart
+
+////////////////////////////////////////////////////////////////
+//////////////////  BASIC DEBIAN PACKAGE MANAGEMENT ///////////
+//////////////////////////////////////////////////////////////
+
+
+1-1
+a) install
+
+b) purge/remove, purge also removes cfg files.
+
+c) updates package lists from repositories specified in sources.list
+
+d) in addition to the same functionality as upgrade it handles changing dependencies of packages (new versions etc).
+
+
+1-2
+a) retrives a list of package selections and write to stdout (packages that can be piped into dpkg --set-selection. can be used to search for packages. purged packages wont be shown
+
+b) remove an installed package (purge removes everything)
+
+c) Listar filer som installerats på systemet av angivet paketnamn
+
+
+6-1 l
+
+6-2  /
+
+6-3 +
+
+6-4 G
+
+6-5 Broken package

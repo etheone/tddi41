@@ -1,0 +1,206 @@
+1-1
+a) Ping is used to test a connection by sending ECHO_REQUESTs, receives (or doesnt) ECHO_RESPONSE. Allows a user to verify that a particular ipaddress exists and can accept requests.
+
+b) -n
+
+c) ping  uses  the ICMP protocol's mandatory ECHO_REQUEST datagram to elicit an ICMP ECHO_RESPONSE from a host
+       or gateway.  ECHO_REQUEST datagrams (``pings'') have an IP and ICMP header, followed by  a  struct  timeval and then an arbitrary number of ``pad'' bytes used to fill out the packet
+
+d) ping -> wait for response -> no response -> host unreachable -> not up
+
+
+1-2
+a) To trace the route packets take to target host
+
+b) traceroute  tracks  the route packets taken from an IP network on their
+       way to a given host. It utilizes the IP protocol's time to  live  (TTL)
+       field  and  attempts to elicit an ICMP TIME_EXCEEDED response from each
+       gateway along the path to the host.
+
+
+c) -n
+
+d)
+traceroute to www.google.se (216.58.209.99), 30 hops max, 60 byte packets
+ 1  idagw-185.ida.liu.se (130.236.185.1)  2.073 ms  2.080 ms  2.294 ms
+ 2  130.236.6.213 (130.236.6.213)  0.598 ms  0.608 ms  0.617 ms
+ 3  a-b-1.net.liu.se (130.236.7.37)  0.592 ms  0.599 ms  0.598 ms
+ 4  130.236.9.198 (130.236.9.198)  0.577 ms  0.574 ms  0.573 ms
+ 5  liu-br2.sunet.se (193.11.0.21)  0.553 ms  0.551 ms  0.548 ms
+ 6  m1tug-xe-7-3-3.sunet.se (130.242.85.173)  15.677 ms  3.636 ms  3.622 ms
+ 7  se-tug.nordu.net (109.105.102.17)  3.619 ms  3.620 ms  3.609 ms
+ 8  google-gw.nordu.net (109.105.98.6)  3.609 ms  3.617 ms  3.614 ms
+ 9  209.85.250.192 (209.85.250.192)  3.846 ms  4.127 ms  4.100 ms
+10  209.85.240.123 (209.85.240.123)  3.804 ms  3.995 ms  3.939 ms
+11  arn06s07-in-f99.1e100.net (216.58.209.99)  4.037 ms  3.974 ms  3.973 ms
+
+Packet starts finding its way out of the liu network by going through some internal routers, which is readirected to sunet, then to nordnu which has the google stuff cached in its datacenter thus receiving a response from somehwer (216.58.209.99)......
+
+
+1-3
+a)
+ifconfig eth0 address 130.236.189.14 netmask 255.255.255.0 up
+ifconfig eth0 broadcast 130.236.189.255
+
+ip addr add 130.236.189.14/255.255.255.0 dev eth0
+ip addr add brd 130.236.189.255 dev eth0
+
+b) route
+   iproute
+   netstat -r
+
+d
+1-4
+a) An interface for examining and dynamically changing parameters in unix-like operating systems.
+
+b)
+/etc/sysctl.d/*.conf
+
+/run/sysctl.d/*.conf
+
+/usr/lib/sysctl.d/*.conf
+
+c) /proc/sys/net/ipv4/*
+
+1-5 d3.sysinst.ida.liu.se dns domain name  130.236.179.80/29 internal network  130.236.178.32 routers ext if
+This gives us:
+
+Broadcast: 130.236.179.87
+HostMin: 130.236.179.81
+HostMax: 130.236.179.86
+Netmask: 255.255.255.248
+
+
+
+
+
+CLIENT:
+change hostname:
+/etc/hostname
+/etc/init.d/hostname.sh start
+
+configure hosts:
+nano /etc/hosts
+
+Add:
+#FQDN
+130.236.179.83 client-1.d3.sysinst.ida.liu.se client-1
+
+Configure interfaces:
+Add:
+
+auto eth0
+iface eth0 inet static
+      address 130.236.179.83
+      netmask 255.255.255.248
+      gateway 130.236.179.81
+      broadcast 130.236.179.87
+
+
+Client does now have a connection to GW! :)
+
+
+Adding a route to gateway:
+
+Client -> GW -> ida-gw
+
+Dont really know what I did, works atleast..
+
+7-1
+a) /etc/nsswitch.conf controls NSS
+
+b) /etc/resolv.conf
+
+c) Lists domains for host-name lookup
+
+
+8-1
+The quagga architecture consists of a core daemon zebra which acts as an
+abstraction layer to the underlying kernel. This daemon presents the Zserv
+API to quagga clients. These clients implement a routing protocol and
+communication routing updates to the zebra daemon.
+
+
+8-2
+/etc/quagga/*.conf
+
+bgpd.conf
+daemons
+debian.conf
+ospf6d.conf
+ospfd.conf
+vtysh.conf
+zebra.conf
+
+
+8-3
+telnet to some host and use the availible commands, eg wr to save quagga configuration, show int lo to show current configuration etc.
+
+
+9-1 RIP is a distance vector routing protocol and uses the bellman ford algorithm to calculate the next hop (shortest distance equals next hop).
+    Uses UDP for transmitting routing information and implements split horizon, route poisioning and the holddown mechanisms to prevent incorrect
+    information from being propagated.
+    RIP uses port 520.
+
+9-2 RIP sends out its routing table to neighbouring rip routers (send on eth1 to ida-gw.sysinst.ida.liu.se).
+
+
+10-3
+ripd> show ip rip  
+Codes: R - RIP, C - connected, S - Static, O - OSPF, B - BGP
+Sub-codes:
+      (n) - normal, (s) - static, (d) - default, (r) - redistribute,
+      (i) - interface
+
+     Network            Next Hop         Metric From            Tag Time
+R(n) 0.0.0.0/0          130.236.178.1         2 130.236.178.1     0 02:37
+C(i) 130.236.179.80/29  0.0.0.0               1 self              0
+ripd> show ip rip status
+Routing Protocol is "rip"
+  Sending updates every 30 seconds with +/-50%, next due in 10 seconds
+  Timeout after 180 seconds, garbage collect after 120 seconds
+  Outgoing update filter list for all interface is not set
+  Incoming update filter list for all interface is not set
+  Default redistribution metric is 1
+  Redistributing:
+  Default version control: send version 2, receive version 2 
+    Interface        Send  Recv   Key-chain
+    eth0             2     2      
+    eth1             2     2      
+  Routing for Networks:
+    130.236.179.80/29
+  Routing Information Sources:
+    Gateway          BadPackets BadRoutes  Distance Last Update
+    130.236.178.1            0         0       120   00:00:11
+  Distance: (default is 120)
+
+
+ 11-3:
+ 
+ripd-ida-gw> show ip rip status
+Routing Protocol is "rip"
+  Sending updates every 30 seconds with +/-50%, next due in 18 seconds
+  Timeout after 180 seconds, garbage collect after 120 seconds
+  Outgoing update filter list for all interface is (prefix-list) announce
+  Incoming update filter list for all interface is (prefix-list) listen
+  Default redistribution metric is 1
+  Redistributing: connected static
+  Default version control: send version 2, receive version 2 
+    Interface        Send  Recv   Key-chain
+    vlan178          2     2      
+    vlan1017         2     2      
+    vlan1019         2     2      
+    vlan1020         2     2      
+  Routing for Networks:
+    vlan178
+    vlan1017
+    vlan1019
+    vlan1020
+  Routing Information Sources:
+    Gateway          BadPackets BadRoutes  Distance Last Update
+    130.236.178.32           0         0       120   00:00:15   //This is the ip of our routers external card..
+  Distance: (default is 120)
+
+  
+
+

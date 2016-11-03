@@ -1,0 +1,28 @@
+emini901@marsix:~$ /data/kurs/adit/bin/mln stop -p lab-2
+D3-server... D3-client-2... D3-client-1... D3-router... Stopping swich up lan
+./stop_lan.sh: 6: kill: Usage: kill [-s sigspec | -signum | -sigspec] [pid | job]... or
+kill -l [exitstatus]
+emini901@marsix:~$ /data/kurs/adit/bin/mln start -p lab-2
+Setting up lan
+Host D3-router seems to be up already
+Host D3-client-1 seems to be up already
+Host D3-client-2 seems to be up already
+Host D3-server seems to be up already
+emini901@marsix:~$ /data/kurs/adit/bin/mln stop -p lab-2
+D3-server... D3-client-2... D3-client-1... D3-router... Stopping swich up lan
+emini901@marsix:~$ /data/kurs/adit/bin/mln clean -p lab-2
+Removing uml_switch sockets
+Removing host sockets
+tog bort ”/users/emini901/mln/lab-2/uml_dir/D3-client-1/D3-client-1/mconsole”
+tog bort ”/users/emini901/mln/lab-2/uml_dir/D3-client-1/D3-client-1/pid”
+tog bort katalog: ”/users/emini901/mln/lab-2/uml_dir/D3-client-1/D3-client-1”
+tog bort ”/users/emini901/mln/lab-2/uml_dir/D3-client-2/D3-client-2/mconsole”
+tog bort ”/users/emini901/mln/lab-2/uml_dir/D3-client-2/D3-client-2/pid”
+tog bort katalog: ”/users/emini901/mln/lab-2/uml_dir/D3-client-2/D3-client-2”
+tog bort ”/users/emini901/mln/lab-2/uml_dir/D3-router/D3-router/mconsole”
+tog bort ”/users/emini901/mln/lab-2/uml_dir/D3-router/D3-router/pid”
+tog bort katalog: ”/users/emini901/mln/lab-2/uml_dir/D3-router/D3-router”
+tog bort ”/users/emini901/mln/lab-2/uml_dir/D3-server/D3-server/mconsole”
+tog bort ”/users/emini901/mln/lab-2/uml_dir/D3-server/D3-server/pid”
+tog bort katalog: ”/users/emini901/mln/lab-2/uml_dir/D3-server/D3-server”
+emini901@marsix:~$ 
