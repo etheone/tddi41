@@ -1,0 +1,25 @@
+2-1: The stratum concept is a static measure of synchronization distance as opposed to jitter or delay. From the perspective of a client, the distance is the number of servers TO a reference clock. A reference clock appears at stratum 0, while the closest servers are at stratum 1.
+
+A hierarchy is necessary to maintain synchonization without overloading the top level servers (ie stratum 1 servers) with requests for time. A hierarchy makes load balancing possible:
+           0	
+     /     |      \
+    1      1       1
+  / | \  / | \   /  |  \
+2   2  2 2 2  2  2  2   2
+
+Plenty of servers to get time from!
+
+
+2-2: 
+
+TOY time: 1000s (startup time check)
+
+up to 128ms adjust diff (if more than 128ms difference longer than stepout threshold (default 900s) system is stepped to correct value.
+
+
+2-3: To prevent chunks of time that does not exist, (time-jumps is not desireable).
+
+
+
+
+	

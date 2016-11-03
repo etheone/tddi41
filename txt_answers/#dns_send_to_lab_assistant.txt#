@@ -1,0 +1,9 @@
+d3.sysinst.ida.liu.se	IN	NS	server.d3.sysinst.ida.liu.se
+server.d3.sysinst.ida.liu.se	IN	A	130.236.179.82
+
+;Reverse delegation entries:
+81      IN      CNAME   gw.d3.sysinst.ida.liu.se.
+82      IN      CNAME   server.d3.sysinst.ida.liu.se.
+83      IN      CNAME   client-1.d3.sysinst.ida.liu.se.
+84      IN      CNAME   client-2.d3.sysinst.ida.liu.se.
+
