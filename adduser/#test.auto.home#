@@ -1,0 +1,14 @@
+svesv723-fstype=nfs,nfsvers=3,rw,sync server:/home1/svesv723
+augro130-fstype=nfs,nfsvers=3,rw,sync server:/home2/augro130
+berka495-fstype=nfs,nfsvers=3,rw,sync server:/home2/berka495
+joner341-fstype=nfs,nfsvers=3,rw,sync server:/home1/joner341
+warna721-fstype=nfs,nfsvers=3,rw,sync server:/home2/warna721
+dorba855-fstype=nfs,nfsvers=3,rw,sync server:/home2/dorba855
+maxbr233-fstype=nfs,nfsvers=3,rw,sync server:/home1/maxbr233
+svesv747 -fstype=nfs,nfsvers=3,rw,sync server:/home1/svesv747
+augro310 -fstype=nfs,nfsvers=3,rw,sync server:/home1/augro310
+berka608 -fstype=nfs,nfsvers=3,rw,sync server:/home2/berka608
+joner697 -fstype=nfs,nfsvers=3,rw,sync server:/home1/joner697
+warna117 -fstype=nfs,nfsvers=3,rw,sync server:/home1/warna117
+dorba305 -fstype=nfs,nfsvers=3,rw,sync server:/home1/dorba305
+maxbr800 -fstype=nfs,nfsvers=3,rw,sync server:/home1/maxbr800
