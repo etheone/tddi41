@@ -1,0 +1,14 @@
+11-1: 
+1+0 is generally more fault tolerant than 0+1.
+
+11-2:
+Rebuild times increase a lot as drives get bigger. Example: In the early 1990's a 
+Maxtor 40MB hard drive took under a minute to rebuild, today a 2TB drive takes around 8 hours to rebuild. If the size of drives keep evolving at the current rate we'll have 30TB drives which will take over a MONTH to rebuild. On top of this, the chance of additional failures during rebuild increases.
+
+11-3:
+A journaled file system uses a "journal" or "log" to record changes not yet saved to disks. This increases chance of recovery during crashes and can be used to repair any inconsitencies in data.
+
+11-4:
+In computer storage, logical volume management or LVM provides a method of allocating space on mass-storage devices that is more flexible than conventional partitioning schemes. In particular, a volume manager can concatenate, stripe together or otherwise combine partitions (or block devices in general) into larger virtual ones that administrators can re-size or move, potentially without interrupting system use.
+
+Volume management represents just one of many forms of storage virtualization; its implementation takes place in a layer in the device-driver stack of an OS (as opposed to within storage devices or in a network).

@@ -1,0 +1,10 @@
+2-1: 
+To avoid repetition in data storage (userfiles etc) which in a directory service case is redundant. A directory service is used to locate, manage, administer and organize everyday items and network resources (folders, files, printers, users, groups etc)
+An alternative would be relational databases but since reading is done more often than writing, which makes transactions and rollbacks less important.
+
+2-2: 
+
+Windows Active Directory
+LDAP
+NIS+
+DNS
