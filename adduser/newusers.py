@@ -4,6 +4,7 @@ import random
 import string
 import time
 import os
+import sys
 
 def readExistingUsernames():
     usersLocal = []
@@ -78,9 +79,9 @@ def addUser(fullname):
 
 
 
-def createUsers():
-    f = open('users.txt', 'r')
-    lines = [line.strip('\n') for line in open('users.txt', 'r')]
+def createUsers(fileToRead):
+    f = open(fileToRead, 'r')
+    lines = [line.strip('\n') for line in open(fileToRead, 'r')]
 
     for line in lines:
         if line != '':
@@ -99,15 +100,20 @@ def createUsers():
     print("DONE : ALL USERS ADDED")
 
 
-
-createUsers()
-
-#print(generatePassword())
 """Main"""
 
-"""
-adduser USERNAME --home /homeX/USERNAME --gecos 'fullNAME' --disabled-password
-echo USERNAMEa:PASSWORD | chpasswd
-chmod 700 /homeX/USERNAME
-modify auto.home
-make -C /var/yp"""
+if(len(sys.argv) != 2):
+   print("Usage: Enter a file to read user names from")
+   print("Ex: python newusers.py <filename>")
+else:
+   fileToRead = sys.argv[1]
+   createUsers(fileToRead)
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" INFORMATION ABOUT THE FILE ARGUMENT:
+File should containt fullname (first and lastname) of a user per line.
+First and lastname separated with blankspace and every user seperated
+with newline.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

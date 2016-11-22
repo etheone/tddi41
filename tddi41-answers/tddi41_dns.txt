@@ -36,14 +36,9 @@ name itself
 1-3
 dns.liu.se (dns)
 ns.liu.se (ns)
+Zone: liu.se
 
-Har lite frågor till Rikard här!
-Frågor:
-Fråga 1-3???
-
-Ska server binda till yp med ypbind?
-
-Storage labben, vilka ska vi använda?
+The problem lies with seperating delegation in a zone into subzones. The solution to this problem is classless in-addr arpa.
 
 1-4
 A single zone can only be delegated once, in-addr.arpa is used to have more points to do delegation on: extending the in-addr.arpa tree downwards for example by using the first address or the first address and network mask length in the corresponding address space to form the first component in the name for the zones.
